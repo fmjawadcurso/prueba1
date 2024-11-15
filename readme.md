@@ -216,64 +216,63 @@ class ModelBBDD
         $this->get_query();
         return !empty($this->rows) ? $this->rows : false;
     }
-   ```
+    ```
  7. **Método** get($campo = null, $valor = null):
     * Este método generico genera una consulta SELECT para obtener todos los datos de una tabla o vista, o genera una consulta SELECT para obtener un dato  por una condición específica.
     * Si $campo y $valor no estan **null**, se filtra por esa condición; si no, se obtiene todo.
     ```php
     public function get($campo = null, $valor = null) {  
-            $this->query = ($campo !== null && $valor !== null)
-                ?"SELECT * FROM $this->table WHERE $campo = '$valor'"
-                :"SELECT * FROM $this->table";
-            
-            $this->get_query();
+	    $this->query = ($campo !== null && $valor !== null)
+		?"SELECT * FROM $this->table WHERE $campo = '$valor'"
+		:"SELECT * FROM $this->table";
+	    
+	    $this->get_query();
 
-            $num_rows = count($this->rows);
+	    $num_rows = count($this->rows);
 
-            $data = array();
+	    $data = array();
 
-            foreach ($this->rows as $key => $value) {
-                array_push($data, $value);
-            }
-        
-            return $data;
-        }
+	    foreach ($this->rows as $key => $value) {
+		array_push($data, $value);
+	    }
+	
+	    return $data;
+	}
     ```
 # Documentación del Proyecto (Preguna 2)
-
 ## 1. Introducción
-    Este proyecto  utiliza el patrón de diseño MVC (Modelo-Vista-Controlador) para gestionar una aplicación en PHP que se conecta a una base de datos, crea una vista en MySQL y muestra los resultados al usuario a través de una interfaz web.
-
-    (permita buscar información de películas o series en una base de datos. El usuario puede buscar por distintos criterios, como título, actor/actriz, año de estreno, género, y categoría. Cuando el usuario hace una consulta, la aplicación muestra los resultados en una tabla)
+ Este proyecto  utiliza el patrón de diseño MVC (Modelo-Vista-Controlador) para gestionar una aplicación en PHP que se conecta a una base de datos, crea una vista en MySQL y muestra los resultados al usuario a través de una interfaz web.
+ (permita buscar información de películas o series en una base de datos. El usuario puede buscar por distintos criterios, como título, actor/actriz, año de estreno, género, y categoría. Cuando el usuario hace una consulta, la aplicación muestra los resultados en una tabla)
 
 ## 2. Objetivo
-    El objetivo de este proyecto es construir una pequeña aplicación en PHP basado en  arquitectura MVC que permita consultar una vista en la base de datos y presentar los resultados de forma organizada en una página web.
-    Esta estructura separa el código en tres partes:
-        * Modelo (Model): donde guardo la lógica para acceder a los datos en la base de datos.
-        * Vista (View): donde defino el diseño que verá el usuario, o sea, la interfaz.
-        * Controlador (Controller): actúa como intermediario entre la vista y el modelo. Llama al modelo para obtener datos y los envía a la vista correspondiente.
+El objetivo de este proyecto es construir una pequeña aplicación en PHP basado en  arquitectura MVC que permita consultar una vista en la base de datos y presentar los resultados de forma organizada en una página web.
+Esta estructura separa el código en tres partes:
+* Modelo (Model): donde guardo la lógica para acceder a los datos en la base de datos.
+* Vista (View): donde defino el diseño que verá el usuario, o sea, la interfaz.
+* Controlador (Controller): actúa como intermediario entre la vista y el modelo. Llama al modelo para obtener datos y los envía a la vista correspondiente.
 
 ## 3. Estructura de Archivos
 El proyecto está dividido en carpetas según el patrón MVC:
 
-
-/assets
-    ├── css
-    ├── img
-    └── js
-/controllers
-    ├── Autoload.php
-    ├── Router.php
-    ├── PreguntasController.php
-    └── ViewController.php
-/models
-    └── Model.php
-/views
-    ├── header.php
-    ├── footer.php
-    ├── preguntas.php
-    └── respuesta.php
-index.php
+```
+  /assets
+      ├── css
+      ├── img
+      └── js
+  /controllers
+      ├── Autoload.php
+      ├── Router.php
+      ├── PreguntasController.php
+      └── ViewController.php
+  /models
+      └── ModelBBDD.php
+  /views
+      ├── header.php
+      ├── footer.php
+      ├── preguntas.php
+      └── respuesta.php
+  index.php
+ ```
 
 ## 4. Explicación del Código Paso a Paso
 Voy a explicarte cada componente del proyecto:
@@ -313,8 +312,8 @@ Las Vistas son los archivos donde está el HTML, css y js que el usuario ve en p
     ### 2. Verificación y Asignación de Campos de Búsqueda
     Verifica si el formulario fue enviado correctamente. y si La variable $_POST['r'] es igual 'respuesta', y  existir los campos consultas y palabra en el formulario.
     ```php
-        if ($_POST['r'] == 'respuesta' && isset($_POST['consultas']) && isset($_POST['palabra'])) {}
-        ```
+     if ($_POST['r'] == 'respuesta' && isset($_POST['consultas']) && isset($_POST['palabra'])) {}
+     ```
     ### 3. Asignación de Campo y Valor
     una vez entramos en la condicion de la arriba , aqui determinado el ($campo) y el valor ($valor) en base a la opción seleccionada en el formulario (title, actors, premiere, genres, o category).
     ```php
@@ -349,22 +348,22 @@ actúa como un intermediario. Recibe las solicitudes del usuario (como hacer cli
 * **Autoload - Autoload.php**: 
     * Este archivo contiene una clase llamada Autoload que se encarga de cargar automáticamente las clases de modelo y controlador cuando se necesitan, sin tener que escribir require en todas partes.Utilizando la funcion __spl_autoload_register__ 
     
-     ```php
-  
-    class Autoload {
-        public function __construct() {
-            spl_autoload_register(function($class_name) {
-                $models_path = './models/' . $class_name . '.php';
-                $controllers_path = './controllers/' . $class_name . '.php';
-                if(file_exists($models_path)) require_once($models_path);	
-                if(file_exists($controllers_path)) require_once($controllers_path);
-            });
+       ```php
+        class Autoload {
+            public function __construct() {
+                spl_autoload_register(function($class_name) {
+                    $models_path = './models/' . $class_name . '.php';
+                    $controllers_path = './controllers/' . $class_name . '.php';
+                    if(file_exists($models_path)) require_once($models_path);	
+                    if(file_exists($controllers_path)) require_once($controllers_path);
+                });
+            }
         }
-    }
-    ```
-    >[!NOTE]
-    Como requerimiento, los nombres de los archivos deben ser iguales
+        ```
+    > 📌 [**!NOTE**]
+     Como requerimiento, los nombres de los archivos deben ser iguales
      a los nombres de las clases que en ellos se encuentran.
+
 
     * **Router.php:**
     Este archivo determina qué vista debe cargarse en función de la URL. El Router maneja rutas específicas y delega la carga de vistas al controlador ViewController.
@@ -381,16 +380,16 @@ actúa como un intermediario. Recibe las solicitudes del usuario (como hacer cli
   * **ViewController.php**
     Este archivo contiene la clase ViewController, que se encarga de cargar las vistas.
     ```php
-    class ViewController {
-	private static $view_path = './views/'; // Ruta donde se encuentran las vistas
-
-	public function load_view($view) { //aqui pasamos el nombre de la vista como parametro para este funcion
-		require_once( self::$view_path . 'header.php' );  // Carga el encabezado
-		require_once( self::$view_path . $view . '.php' ); // Carga la vista solicitada , este vista controla el rutador(Router)
-		require_once( self::$view_path . 'footer.php' );  // Carga el pie de página
-	}
-  }
-  ```
+      class ViewController {
+  	private static $view_path = './views/'; // Ruta donde se encuentran las vistas
+  
+  	public function load_view($view) { //aqui pasamos el nombre de la vista como parametro para este funcion
+  		require_once( self::$view_path . 'header.php' );  // Carga el encabezado
+  		require_once( self::$view_path . $view . '.php' ); // Carga la vista solicitada , este vista controla el rutador(Router)
+  		require_once( self::$view_path . 'footer.php' );  // Carga el pie de página
+  	}
+    }
+    ```
   * **PreguntasController.php**
   Este archivo contiene la clase PreguntasController, que se encarga de manejar la lógica de la vista preguntas.php.
   Este clase se instancia la clase del ModelBBDD prara puede llamar los metedos del modelo para obtener los datos.
@@ -426,4 +425,5 @@ $app = new Router();
 * Librerías:
     + jQuery
     + Bootstrap
-    + DataTables
+    + DataTable
+
