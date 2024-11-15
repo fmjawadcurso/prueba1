@@ -30,6 +30,7 @@ Este documento detalla los pasos realizados para la **importación de una base d
 2. Asegúrate de que la base de datos llamada `movies` esté creada en tu servidor. Si no existe, puedes crearla ejecutando el siguiente comando en el editor SQL de Workbench:
    ```sql
    CREATE DATABASE movies;
+   ```
 3. Selecciona la base de datos movies en la lista de bases de datos.
 4. Haz clic derecho sobre movies y selecciona Table Data Import Wizard.
 5. En la ventana emergente, selecciona el archivo .sql que contiene el esquema y los datos de las tablas que deseas importar.
@@ -46,22 +47,15 @@ La vista se utiliza para combinar datos de dos tablas diferentes en una sola est
      CREATE VIEW MovieDirectors AS
     SELECT movies.title, directors.name
     FROM movies
-    JOIN directors ON movies.director_id = directors.id;
-
-    CREATE VIEW nombre_de_la_vista AS
-   SELECT t1.columna1, t1.columna2, t2.columna3
-   FROM tabla1 AS t1
-   JOIN tabla2 AS t2 ON t1.id = t2.id;
-```
+  ```
 Esta consulta selecciona columnas específicas de cada tabla y las une en función de un id común. Puedes modificar la consulta según los datos de tus tablas.
+
 4. Ejecuta la consulta en MySQL Workbench para crear la vista.
 5. Para verificar que la vista MovieDirectors se ha creado correctamente, ejecuta la siguiente consulta:
-    ```sql
-         SELECT * FROM MovieDirectors;
-
-         SELECT * FROM nombre_de_la_vista;
-         ```
-    Esto debería mostrar los datos combinados de las dos tablas.
+```sql
+SELECT * FROM MovieDirectors;
+```
+Esto debería mostrar los datos combinados de las dos tablas.
 
 ## Parte 2: Implementación de una Clase ModelBBDD en PHP para conectar con la base de datos y Mostrar Datos desde la Vista
  La clase __ModelBBDD__ está diseñada para gestionar la conexión a la base de datos y realizar consultas SQL de manera simplificada y reutilizable. Esta clase permite realizar operaciones como seleccionar todos los datos de una tabla o vista, filtrar datos por condiciones específicas y manejar conexiones de manera segura. A continuación, se explica cada sección de la clase paso a paso:
