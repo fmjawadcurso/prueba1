@@ -354,9 +354,10 @@ actúa como un intermediario. Recibe las solicitudes del usuario (como hacer cli
             }
         }
         ```
-    > 📌 [**!NOTE**]
-     Como requerimiento, los nombres de los archivos deben ser iguales
-     a los nombres de las clases que en ellos se encuentran.
+       
+ > [!NOTE] 
+ Como requerimiento para que funciona la funcion __spl_autoload_register__ , los nombres de los archivos deben ser iguales
+ a los nombres de las clases que en ellos se encuentran.
 
 
     * **Router.php:**
